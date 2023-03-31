@@ -17,7 +17,7 @@ public class User extends BaseEntity {
     @javax.persistence.Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
 
     @Column(name = "username", unique = true)
     private String username;

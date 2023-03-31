@@ -1,5 +1,6 @@
 package io.cloudtype.mymemory.user;
 
+import io.cloudtype.mymemory.MyMemoryException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,5 +13,22 @@ public class UserService {
 
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    public User upsertUser(User user) {
+        return userRepository.save(user);
+    }
+
+    public User getUser(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> {
+                    return new MyMemoryException(404, userId + "에 해당하는 유저가 없습니다");
+                });
+        return user;
+
+    }
+
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
     }
 }
