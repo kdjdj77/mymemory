@@ -22,13 +22,16 @@ public class UserService {
     public User getUser(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> {
-                    return new MyMemoryException(404, userId + "에 해당하는 유저가 없습니다");
+                    return new MyMemoryException(404, "해당하는 유저가 없습니다");
                 });
         return user;
-
     }
 
     public void deleteUser(Long userId) {
+        userRepository.findById(userId)
+                .orElseThrow(() -> {
+                    return new MyMemoryException(404, "해당하는 유저가 없습니다");
+                });
         userRepository.deleteById(userId);
     }
 }

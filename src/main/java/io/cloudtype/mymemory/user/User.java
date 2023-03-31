@@ -14,8 +14,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper=false)
 public class User extends BaseEntity {
-    @javax.persistence.Id
     @Id
+    @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

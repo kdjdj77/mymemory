@@ -1,12 +1,14 @@
 package io.cloudtype.mymemory.user.request;
 
 import io.cloudtype.mymemory.user.User;
+import lombok.Data;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
+@Data
 public class UpdateRequest {
 
     @NotBlank(message = "별명을 설정해주세요")
@@ -15,6 +17,6 @@ public class UpdateRequest {
     private String name;
 
     public void update(User user) {
-        user.setName(name);
+        user.setName(this.name);
     }
 }

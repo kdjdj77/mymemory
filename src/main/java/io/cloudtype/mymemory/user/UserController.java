@@ -3,6 +3,7 @@ package io.cloudtype.mymemory.user;
 import io.cloudtype.mymemory.MyMemoryException;
 import io.cloudtype.mymemory.user.request.JoinRequest;
 import io.cloudtype.mymemory.user.request.UpdateRequest;
+import io.cloudtype.mymemory.user.response.DeleteResponse;
 import io.cloudtype.mymemory.user.response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -31,13 +32,13 @@ public class UserController {
 
     @GetMapping("/{id}")
     public UserResponse get(@PathVariable("id") Long userId) {
-//        throw new MyMemoryException(401, "test");
         User user = userService.getUser(userId);
         return UserResponse.of(user);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Long userId) {
+    public DeleteResponse delete(@PathVariable("id") Long userId) {
         userService.deleteUser(userId);
+        return DeleteResponse.of(200);
     }
 }
