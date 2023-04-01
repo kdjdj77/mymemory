@@ -2,6 +2,7 @@ package io.cloudtype.mymemory.memo;
 
 import io.cloudtype.mymemory.memo.request.UpdateRequest;
 import io.cloudtype.mymemory.memo.request.WriteRequest;
+import io.cloudtype.mymemory.memo.response.DeleteResponse;
 import io.cloudtype.mymemory.memo.response.MemoResponse;
 import io.cloudtype.mymemory.user.User;
 import io.cloudtype.mymemory.user.UserService;
@@ -32,9 +33,9 @@ public class MemoController {
     }
 
     @DeleteMapping("/{userId}/{memoId}")
-    public void delete(@PathVariable("userId") Long userId, @PathVariable("memoid") Long memoId) {
+    public DeleteResponse delete(@PathVariable("userId") Long userId, @PathVariable("memoid") Long memoId) {
         memoService.deleteMemo(userId, memoId);
-        return ;
+        return DeleteResponse.of(200);
     }
 
 
