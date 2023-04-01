@@ -1,5 +1,6 @@
 package io.cloudtype.mymemory.memo;
 
+import io.cloudtype.mymemory.memo.request.UpdateRequest;
 import io.cloudtype.mymemory.memo.request.WriteRequest;
 import io.cloudtype.mymemory.memo.response.MemoResponse;
 import io.cloudtype.mymemory.user.User;
@@ -21,6 +22,13 @@ public class MemoController {
         Memo memo = request.toMemo();
 
         return MemoResponse.of(memoService.writeMemo(userId, memo));
+    }
+
+    @PutMapping("/{id}")
+    public MemoResponse update(@RequestBody @Validated UpdateRequest request, @PathVariable("id") Long memoId) {
+        Memo memo = memoService.getMemo(memoId);
+        request.update(memo);
+        return MemoResponse.of(memoService.upsertMemo(memo));
     }
 
 
