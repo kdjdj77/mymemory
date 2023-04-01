@@ -31,6 +31,12 @@ public class MemoController {
         return MemoResponse.of(memoService.upsertMemo(memo));
     }
 
+    @DeleteMapping("/{userId}/{memoId}")
+    public void delete(@PathVariable("userId") Long userId, @PathVariable("memoid") Long memoId) {
+        memoService.deleteMemo(userId, memoId);
+        return ;
+    }
+
 
 
 }

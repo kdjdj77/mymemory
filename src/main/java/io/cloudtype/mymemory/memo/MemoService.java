@@ -35,4 +35,11 @@ public class MemoService {
     public Memo upsertMemo(Memo memo) {
         return memoRepository.save(memo);
     }
+
+    public void deleteMemo(Long userId, Long memoId) {
+        User user = userRepository.findById(userId).orElse(null);
+        if (user != null) {
+            memoRepository.deleteById(memoId);
+        }
+    }
 }
