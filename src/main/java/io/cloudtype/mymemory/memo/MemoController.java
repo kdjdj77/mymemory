@@ -1,14 +1,27 @@
 package io.cloudtype.mymemory.memo;
 
+import io.cloudtype.mymemory.memo.request.WriteRequest;
+import io.cloudtype.mymemory.memo.response.MemoResponse;
+import io.cloudtype.mymemory.user.User;
+import io.cloudtype.mymemory.user.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/memos")
 @RequiredArgsConstructor
 public class MemoController {
+
     private final MemoService memoService;
+    private final UserService userService;
+
+    @PostMapping("/write/{id}")
+    public MemoResponse write(@RequestBody @Validated WriteRequest request, @PathVariable("id") Long userId) {
+        Memo memo = request.toMemo();
+
+        return MemoResponse.of(memoService.writeMemo(userId, memo));
+    }
 
 
 

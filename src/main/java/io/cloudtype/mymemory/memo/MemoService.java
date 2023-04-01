@@ -1,5 +1,8 @@
 package io.cloudtype.mymemory.memo;
 
+import io.cloudtype.mymemory.memo.response.MemoResponse;
+import io.cloudtype.mymemory.user.User;
+import io.cloudtype.mymemory.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,7 +11,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class MemoService {
+
     private final MemoRepository memoRepository;
+    private final UserRepository userRepository;
 
-
+    public Memo writeMemo(Long userId, Memo memo) {
+        User user = userRepository.findById(userId).orElse(null);
+        if (user != null) {
+            memoRepository.save(memo);
+        }
+        return memo;
+    }
 }
