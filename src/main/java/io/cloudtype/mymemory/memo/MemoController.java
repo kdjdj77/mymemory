@@ -38,6 +38,11 @@ public class MemoController {
         return DeleteResponse.of(200);
     }
 
+    @GetMapping("/{id}")
+    public void getMemo(@PathVariable("id") Long userId, Memo memo) {
+        memoService.getMemoList(userId, memo);
+    }
+
 
 
 }

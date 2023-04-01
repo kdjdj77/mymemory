@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -40,6 +42,15 @@ public class MemoService {
         User user = userRepository.findById(userId).orElse(null);
         if (user != null) {
             memoRepository.deleteById(memoId);
+        }
+    }
+
+    public void getMemoList(Long userId, Memo memo) {
+        List<Memo> memoList = memoRepository.findByUserIdandMemoId(userId, memo.getUserId());
+        if (memoList.size() == 0 || memoList == null) {
+            return new MyMemoryException(404, "일기 목록이 없습니다");
+        } else {
+            
         }
     }
 }
