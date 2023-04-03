@@ -27,6 +27,12 @@ public class PrincipalDetailService implements UserDetailsService{
 		// username으로 DB에서 유저 찾기
 		User user = userService.findByUsername(username);
 
+		if (user != null) {
+			PrincipalDetails userDetails = new PrincipalDetails(user);
+			userDetails.setUserService(userService);
+			return userDetails;
+		}
+
 		// 유저가 없으면 UsernameNotFoundException을 throw 해주도록 한다
 		if (user == null) throw new UsernameNotFoundException(username);
 
