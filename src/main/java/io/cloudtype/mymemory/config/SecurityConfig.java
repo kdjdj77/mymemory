@@ -38,10 +38,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			// form 기반 인증 페이지 활성화.(.loginPage(url) 가 없으면 '디폴트 로그인' form 페이지가 활성화)
 			.formLogin()
 			// 로그인 필요한 상황 발생시 매개변수의 url (로그인 폼) 로 request 발생
-			.loginPage("/user/login")
-			// POST "/user/login" 접근시 시큐리티가 낚아채서 대신 로그인 진행
+			.loginPage("/users/login")
+			// POST "/users/login" 접근시 시큐리티가 낚아채서 대신 로그인 진행
 			// 위 요청이 오면 자동으로 loadUserByUsername() 가 실행되어 인증여부 확인진행
-			.loginProcessingUrl("/user/login")
+			.loginProcessingUrl("/users/login")
 			// '직접 /login' → /loginOk 에서 성공하면 "/home" 로 이동시키기
 			.defaultSuccessUrl("/home")
 			// 로그인 성공직후 수행할 코드

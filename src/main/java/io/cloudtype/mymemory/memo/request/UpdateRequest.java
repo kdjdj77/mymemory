@@ -9,7 +9,7 @@ import javax.validation.constraints.Pattern;
 
 @Data
 public class UpdateRequest {
-    @NotBlank(message = "별명을 설정해주세요")
+    @NotBlank(message = "제목을 설정해주세요")
     private String title;
     private String content;
 
