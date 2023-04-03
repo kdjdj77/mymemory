@@ -20,7 +20,6 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class PrincipalDetailService implements UserDetailsService{
 	private final UserService userService;
-	private final PasswordEncoder passwordEncoder;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -42,10 +41,5 @@ public class PrincipalDetailService implements UserDetailsService{
 			userDetails.setUserService(userService);
 			return userDetails;
 		}
-	}
-
-	@Transactional
-	public boolean checkMemberPassword(String inputPassword, String username) {
-	    return passwordEncoder.matches(inputPassword, loadUserByUsername(username).getPassword());
 	}
 }
