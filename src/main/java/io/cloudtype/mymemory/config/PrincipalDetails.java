@@ -46,10 +46,7 @@ public class PrincipalDetails implements UserDetails{
 	// 현재 로그인한 사용자의 권한정보가 필요할때마다 호출된다. 혹은 필요할때마다 직접 호출해 사용할수도 있다
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		System.out.println("getAuthorities() 호출");
-
-		Collection<GrantedAuthority> collect = new ArrayList<>();
-		return collect;
+		return new ArrayList<>();
 	}
 
 	// 로그인 한 사용자의 password 는?
