@@ -48,8 +48,8 @@ public class MemoService {
     public void getMemoList(Long userId, Memo memo) {
         List<Memo> memoList = memoRepository.findByUserIdandMemoId(userId, memo.getUserId());
         if (memoList.size() == 0 || memoList == null) {
-            return new MyMemoryException(404, "일기 목록이 없습니다");
-        } else {
+//            return new MyMemoryException(404, "일기 목록이 없습니다");
+//        } else {
             
         }
     }
