@@ -6,6 +6,7 @@ import io.cloudtype.mymemory.user.request.UpdateRequest;
 import io.cloudtype.mymemory.user.response.DeleteResponse;
 import io.cloudtype.mymemory.user.response.UserResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+
+    @PostMapping("/login")
+    public void login() {}
 
     @PostMapping("/join")
     public UserResponse join(@RequestBody @Validated JoinRequest request) {

@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 public class MemoResponse {
-
     private int status;
     private Long id;
     private String title;
