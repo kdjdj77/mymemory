@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}">
+
+<div layout:fragment="content">
+    <h1>일기 작성</h1>
+    <form th:action="@{/memos/write}"  method="post">
+        <!--
+        <label for="title">제목:</label>
+        <input type="text" id="title" name="title">
+        <label for="content">내용:</label>
+        <input type="password" id="content" name="content">
+        <label for="date">날짜:</label>
+        <input type="password" id="date" name="date">
+        -->
+        <input type="button" value="전송" onclick="send()">
+    </form>
+</div>
+
+<script layout:fragment="script">
+    function send() {
+        $.ajax({
+            contentType: 'application/json',
+            url: `/memos/write`,
+            type:"POST",
+            dataType: 'json',
+            data: JSON.stringify({
+                "title": "제목",
+                "content": "내용",
+                "date": "2023.02.02"
+            }),
+        })
+    }
+
+</script>
+
+</html>
