@@ -50,7 +50,7 @@ public class MemoService {
         if (memoList.size() == 0 || memoList == null) {
 //            return new MyMemoryException(404, "일기 목록이 없습니다");
 //        } else {
-            
+
         }
     }
 }
