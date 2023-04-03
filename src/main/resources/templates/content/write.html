@@ -5,17 +5,12 @@
 
 <div layout:fragment="content">
     <h1>일기 작성</h1>
-    <form th:action="@{/memos/write}"  method="post">
-        <!--
-        <label for="title">제목:</label>
-        <input type="text" id="title" name="title">
-        <label for="content">내용:</label>
-        <input type="password" id="content" name="content">
-        <label for="date">날짜:</label>
-        <input type="password" id="date" name="date">
-        -->
-        <input type="button" value="전송" onclick="send()">
-    </form>
+    <input type="text" id="title" name="title" placeholder="제목">
+    <textarea id="content" name="content" placeholder="내용">
+
+    </textarea>
+    <input type="text" id="date" name="date" placeholder="날짜">
+    <input type="button" value="전송" onclick="send()">
 </div>
 
 <script layout:fragment="script">
@@ -26,13 +21,12 @@
             type:"POST",
             dataType: 'json',
             data: JSON.stringify({
-                "title": "제목",
-                "content": "내용",
-                "date": "2023.02.02"
+                "title": $("#title").val(),
+                "content": $("#content").val(),
+                "date": $("#date").val()
             }),
         })
     }
-
 </script>
 
 </html>
