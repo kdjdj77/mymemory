@@ -2,16 +2,60 @@
 <html xmlns:th="http//www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>일기 쓰기 폼</title>
+    <style>
+        body {
+            background-color: #E6F2FF; /* 배경색상 */
+        }
+        frame {
+            background-color: #FFFFFF; /* 폼 배경색상 */
+            border: 1px solid #C1D4E7; /* 폼 테두리 */
+            padding: 20px; /* 폼 내부 여백 */
+            max-width: 500px; /* 폼 최대 너비 */
+            margin: 0 auto; /* 가운데 정렬 */
+        }
+        input[type="date"],
+        input[type="text"],
+        textarea {
+            width: 100%; /* 폼 입력 요소의 너비 */
+            padding: 8px; /* 입력 요소 내부 여백 */
+            margin-bottom: 10px; /* 입력 요소 간격 */
+            border: 1px solid #C1D4E7; /* 입력 요소 테두리 */
+            border-radius: 5px; /* 입력 요소 둥글게 처리 */
+            font-size: 16px; /* 입력 요소 글자 크기 */
+            color: #444444; /* 입력 요소 글자 색상 */
+            box-sizing: border-box; /* 요소 크기 계산 시 테두리와 여백 포함 */
+        }
+        input[type="button"] {
+            background-color: #4CAF50; /* 제출 버튼 배경색상 */
+            color: #FFFFFF; /* 제출 버튼 글자 색상 */
+            padding: 12px 20px; /* 제출 버튼 내부 여백 */
+            border: none; /* 제출 버튼 테두리 없음 */
+            border-radius: 5px; /* 제출 버튼 둥글게 처리 */
+            font-size: 16px; /* 제출 버튼 글자 크기 */
+            cursor: pointer; /* 커서 모양 변경 */
+            box-sizing: border-box; /* 요소 크기 계산 시 테두리와 여백 포함 */
+        }
+        input[type="button"]:hover {
+            background-color: #3E8E41; /* 제출 버튼 호버 배경색상 */
+        }
+    </style>
+</head>
+<body>
+<div id="frame">
+    <div layout:fragment="content">
+        <input type="text" id="date" name="date" placeholder="날짜">
+        <input type="text" id="title" name="title" placeholder="제목">
+        <textarea id="content" name="content" rows="10" cols="50" placeholder="내용">
 
-<div layout:fragment="content">
-    <h1>일기 작성</h1>
-    <input type="text" id="title" name="title" placeholder="제목">
-    <textarea id="content" name="content" placeholder="내용">
 
-    </textarea>
-    <input type="text" id="date" name="date" placeholder="날짜">
-    <input type="button" value="전송" onclick="send()">
+        </textarea>
+        <input type="button" value="전송" onclick="send()">
+    </div>
 </div>
+</body>
 
 <script layout:fragment="script">
     function send() {
