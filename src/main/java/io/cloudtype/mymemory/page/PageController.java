@@ -10,8 +10,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("")
 @RequiredArgsConstructor
 public class PageController {
+    @RequestMapping(value = "/login", method= RequestMethod.GET)
+    public String goLogin(Model model) {
+        return "content/login";
+    }
+
     @RequestMapping(value = "/home", method= RequestMethod.GET)
     public String goHome(Model model) {
         return "content/home";
+    }
+
+    @RequestMapping(value = "/write", method= RequestMethod.GET)
+    public String goWrite(Model model) {
+        return "content/write";
     }
 }

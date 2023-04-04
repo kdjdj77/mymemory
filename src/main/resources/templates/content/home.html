@@ -2,9 +2,11 @@
 <html xmlns:th="http//www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default_layout}">
-
+<head>
+  <title>Home</title>
+  <script type="text/javascript" th:src="@{/js/authCheck.js}"></script>
+</head>
 <div layout:fragment="content">
   본문 영역입니다.
 </div>
-
 </html>
