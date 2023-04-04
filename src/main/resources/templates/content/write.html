@@ -28,7 +28,7 @@
             color: #444444; /* 입력 요소 글자 색상 */
             box-sizing: border-box; /* 요소 크기 계산 시 테두리와 여백 포함 */
         }
-        input[type="submit"] {
+        input[type="button"] {
             background-color: #4CAF50; /* 제출 버튼 배경색상 */
             color: #FFFFFF; /* 제출 버튼 글자 색상 */
             padding: 12px 20px; /* 제출 버튼 내부 여백 */
@@ -46,12 +46,12 @@
 <body>
 <div id="frame">
     <div layout:fragment="content">
+        <input type="text" id="date" name="date" placeholder="날짜">
         <input type="text" id="title" name="title" placeholder="제목">
         <textarea id="content" name="content" rows="10" cols="50" placeholder="내용">
 
 
         </textarea>
-        <input type="text" id="date" name="date" placeholder="날짜">
         <input type="button" value="전송" onclick="send()">
     </div>
 </div>
