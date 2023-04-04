@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Demo.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Demo.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/io.cloudtype.Demo.main.iml" filepath="$PROJECT_DIR$/.idea/modules/io.cloudtype.Demo.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mymemory.Demo.main.iml" filepath="$PROJECT_DIR$/.idea/modules/mymemory.Demo.main.iml" />
     </modules>
   </component>
 </project>
