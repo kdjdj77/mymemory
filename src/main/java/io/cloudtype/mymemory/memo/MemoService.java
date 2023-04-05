@@ -2,7 +2,6 @@ package io.cloudtype.mymemory.memo;
 
 import io.cloudtype.mymemory.MyMemoryException;
 import io.cloudtype.mymemory.common.U;
-import io.cloudtype.mymemory.config.PrincipalDetails;
 import io.cloudtype.mymemory.memo.response.MemoResponse;
 import io.cloudtype.mymemory.user.User;
 import io.cloudtype.mymemory.user.UserRepository;

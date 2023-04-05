@@ -27,8 +27,7 @@ public class ExceptionController {
     }
 
     @ExceptionHandler(MyMemoryException.class)
-    public ErrorResponse handle(HttpServletResponse response, MyMemoryException e) {
-        response.setStatus(e.getStatus());
+    public ErrorResponse handle(MyMemoryException e) {
         return new ErrorResponse(e.getStatus(), e.getMessage());
     }
 
