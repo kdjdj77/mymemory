@@ -24,4 +24,9 @@ public class PageController {
     public String goWrite(Model model) {
         return "content/write";
     }
+
+    @RequestMapping(value = "/join", method= RequestMethod.GET)
+    public String gojoin(Model model) {
+        return "content/join";
+    }
 }
