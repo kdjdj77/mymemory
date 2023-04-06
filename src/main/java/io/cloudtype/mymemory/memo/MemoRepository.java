@@ -8,4 +8,6 @@ import java.util.List;
 public interface MemoRepository extends JpaRepository<Memo, Long> {
 
     List<Memo> findByUserIdAndDateBetween(Long userId, LocalDate firstDate, LocalDate lastDate);
+
+    Memo findByUserIdAndDate(Long userId, LocalDate date);
 }
