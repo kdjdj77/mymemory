@@ -60,4 +60,13 @@ public class MemoController {
         List<Memo> list = memoService.getMemoList(year, month);
         return MemoListResponse.of(list);
     }
+
+    @GetMapping("/{year}/{month}/{day}")
+    public MemoResponse getMemoByDate(
+            @PathVariable("year") Integer year,
+            @PathVariable("month") Integer month,
+            @PathVariable("day") Integer day) {
+        Memo memo = memoService.getMemoByDate(year, month, day);
+        return MemoResponse.of(memo);
+    }
 }

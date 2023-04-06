@@ -6,19 +6,7 @@
     <meta charset="UTF-8">
     <title>일기 쓰기 폼</title>
     <script type="text/javascript" th:src="@{/js/authCheck.js}"></script>
-    <script type="text/javascript" th:src="@{/vendor/jquery/jquery-ui.min.js}"></script>
-    <link rel="stylesheet" th:href="@{/vendor/jquery/jquery-ui.min.css}"/>
     <style layout:fragment="css">
-        input[type="date"] {
-            width: 4rem; /* 폼 입력 요소의 너비 */
-            padding: 8px; /* 입력 요소 내부 여백 */
-            margin-bottom: 10px; /* 입력 요소 간격 */
-            border: 1px solid #C1D4E7; /* 입력 요소 테두리 */
-            border-radius: 5px; /* 입력 요소 둥글게 처리 */
-            font-size: 16px; /* 입력 요소 글자 크기 */
-            color: #444444; /* 입력 요소 글자 색상 */
-            box-sizing: border-box; /* 요소 크기 계산 시 테두리와 여백 포함 */
-        }
         input[type="text"],
         textarea {
             width: 100%; /* 폼 입력 요소의 너비 */
@@ -29,6 +17,8 @@
             font-size: 16px; /* 입력 요소 글자 크기 */
             color: #444444; /* 입력 요소 글자 색상 */
             box-sizing: border-box; /* 요소 크기 계산 시 테두리와 여백 포함 */
+            resize:none;
+            font-family: "Nanum Gothic";
         }
         input[type="button"] {
             background-color: dodgerblue; /* 제출 버튼 배경색상 */
@@ -43,48 +33,38 @@
         input[type="button"]:hover {
             background-color: #3E8E41; /* 제출 버튼 호버 배경색상 */
         }
-        <!--datepicer 버튼 롤오버 시 손가락 모양 표시-->
-            .ui-datepicker-trigger{cursor: pointer;}
-
-        <!--datepicer input 롤오버 시 손가락 모양 표시-->
-
-            .hasDatepicker{cursor: pointer;}
     </style>
 </head>
 <body>
 <div id="frame">
     <div layout:fragment="content">
-        <input type="text" id="date" name="date" placeholder="날짜">
-        <input type="text" id="title" name="title" placeholder="제목">
-        <textarea id="content" name="content" rows="10" cols="50" placeholder="내용"></textarea>
+        <h4>
+            <span th:text="${date}"></span>
+            <button type="button" onclick="redirect()"><i class="fa fa-reply"></i></button>
+        </h4>
+        <input type="hidden" id="date" th:value="${memoDate}">
+        <input type="text" id="title" placeholder="제목">
+        <textarea id="content" rows="10" cols="100" placeholder="내용" maxlength="5000"></textarea>
         <input type="button" value="전송" onclick="send()">
     </div>
 </div>
 </body>
 
 <script layout:fragment="script">
-    $.datepicker.setDefaults({
-        dateFormat: 'yy.mm.dd',
-        prevText: '이전 달',
-        nextText: '다음 달',
-        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
-        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-        showMonthAfterYear: true,
-        yearSuffix: '년'
-    });
-
-    $(function () {
-        $('#date').datepicker({
-            showOn:"button",
-            buttonText: "",
-            changeMonth:true,
-            changeYear:true
-        }).next('button').append('<i style="font-size:1.2rem;" class="fa fa-calendar"></i>');
-        $('#date').datepicker('setDate', 'today');
-    });
+    let dateList = $("#date").val().split(".");
+    $.ajax({
+        contentType: 'application/json',
+        url: `/api/memos/${dateList[0]}/${dateList[1]}/${dateList[2]}`,
+        type:"GET",
+        dataType: 'json',
+        headers: { 'X-AUTH-TOKEN': localStorage.getItem("token") },
+        success : function(data) {
+            if (data.status == 200) {
+                $("#title").val(data.title);
+                $("#content").val(data.content);
+            }
+        }
+    })
 
     function send() {
         $.ajax({
@@ -98,9 +78,13 @@
                 "content": $("#content").val(),
                 "date": $("#date").val()
             }),
+            success : function(data) {
+                if (data.status == 200) location.href = `/home`;
+            }
         })
     }
+    function redirect() {
+        location.href = `/home`;
+    }
 </script>
-
-
 </html>
