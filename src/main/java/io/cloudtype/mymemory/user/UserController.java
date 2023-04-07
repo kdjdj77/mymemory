@@ -52,4 +52,5 @@ public class UserController {
         userService.deleteUser(userId);
         return DeleteResponse.of(200);
     }
+
 }
