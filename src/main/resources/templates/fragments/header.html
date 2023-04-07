@@ -1,8 +1,71 @@
 <!DOCTYPE html>
 <html>
+<body>
 <th:block th:fragment="header">
-    <div>
-        헤더입니다
-    </div>
+    <style>
+        header {
+            z-index: 10;
+            background-color: #0077be;
+            position:fixed;
+            left:0;
+            top:0;
+            padding-top:0.5rem;
+            width:100vw;
+            height:3rem;
+            color: #ffffff;
+        }
+        #logo {
+            padding-top:0.25rem;
+            padding-bottom:0.25rem;
+            font-size:1.5rem;
+            font-family: 'Shantell Sans', cursive;
+            cursor:pointer;
+        }
+        #logoutBtn {
+            font-family: 'Shantell Sans', cursive;
+        }
+        #name {
+            padding-top:0.3rem;
+            padding-bottom:0.5rem;
+            font-size:1.5rem;
+            font-family: 'Gamja_Flower';
+        }
+        .float-right {
+            float:right;
+            margin-right:1rem;
+        }
+        .float-left {
+            margin-left:1rem;
+            float:left;
+        }
+    </style>
+    <header>
+        <div id="logo" class="float-left" onclick="goHome()">Welcome to MyMemory</div>
+        <button type="button" id="logoutBtn" class="btn float-right" onclick="logout()">LogOut</button>
+        <div id="name" class="float-right"></div>
+    </header>
+    <script>
+        function logout() {
+            localStorage.clear();
+            location.href = `/login`;
+        }
+        function goHome() {
+            location.href = `/home`;
+        }
+        $.ajax({
+            contentType: 'application/json',
+            url:`/api/users`,
+            type:"GET",
+            dataType: 'json',
+            headers: { 'X-AUTH-TOKEN': localStorage.getItem("token") },
+            success : function(data) {
+                if (data.status == 200) {
+                    $("#name").text(`${data.name}님`);
+                } else console.log(data.message);
+            },
+            error : function() { console.log("유저를 가져올 수 없습니다"); }
+        });
+    </script>
 </th:block>
+</body>
 </html>

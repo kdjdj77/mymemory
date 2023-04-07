@@ -41,23 +41,31 @@
     .today {
       border:2px solid blueviolet;
     }
+    p {
+      font-family: "Nanum Gothic";
+    }
     .sm { font-size:0.2rem; margin:0.05rem; padding:0.05rem;}
     .co { background-color: slateblue; color:white; }
   </style>
 </head>
 <div layout:fragment="content">
+  <th:bloc th:replace="fragments/header::header"></th:bloc>
+  <div style="width:100%; box-sizing: border-box; background-color:cornflowerblue; padding:0.5rem; color:white; margin-bottom:0.5rem;">
+    <p style="text-align: center; font-weight:bold" id="wiseMessage"></p>
+    <p style="text-align: center; font-size:0.8rem;" id="wiseAuthor"></p>
+  </div>
   <div style="width:100%; text-align:center; margin-bottom:1rem;">
-    <button type="button" style="width:2rem; height:2rem; float:left; vertical-align:middle; margin-left:1rem;" onclick="minusYear()">
+    <button type="button" style="cursor:pointer; width:2rem; height:2rem; float:left; vertical-align:middle; margin-left:1rem;" onclick="minusYear()">
       <i class="fa fa-angle-double-left fa-2x"></i>
     </button>
-    <button type="button" style="width:2rem; height:2rem; vertical-align:middle; margin-right:1rem;" onclick="minusMonth()">
+    <button type="button" style="cursor:pointer; width:2rem; height:2rem; vertical-align:middle; margin-right:1rem;" onclick="minusMonth()">
       <i class="fa fa-angle-left fa-2x"></i>
     </button>
     <span style="font-size:1.2rem; font-weight:bold;" id="YM"></span>
-    <button type="button" style="width:2rem; height:2rem; vertical-align:middle; margin-left:1rem;" onclick="plusMonth()">
+    <button type="button" style="cursor:pointer; width:2rem; height:2rem; vertical-align:middle; margin-left:1rem;" onclick="plusMonth()">
       <i class="fa fa-angle-right fa-2x"></i>
     </button>
-    <button type="button" style="width:2rem; height:2rem; float:right; vertical-align:middle; margin-right:1rem;" onclick="plusYear()">
+    <button type="button" style="cursor:pointer; width:2rem; height:2rem; float:right; vertical-align:middle; margin-right:1rem;" onclick="plusYear()">
       <i class="fa fa-angle-double-right fa-2x"></i>
     </button>
   </div>
@@ -74,6 +82,13 @@
   <div id="appointList">
 
   </div>
+  <script type="text/javascript" th:src="@{/js/showText.js}"></script>
+  <script>
+    let textData = getRandomWiseText();
+    console.log(textData);
+    $("#wiseMessage").html(textData.message);
+    $("#wiseAuthor").html(`-${textData.author}-`);
+  </script>
 </div>
 <script layout:fragment="script">
   let today = new Date();
@@ -104,7 +119,7 @@
           setMemos(data.list, y, m);
         } else console.log(data.message);
       },
-      error : function() { alert("일기 목록을 가져올 수 없습니다"); }
+      error : function() { console.log("일기 목록을 가져올 수 없습니다"); }
     });
   }
 
@@ -130,8 +145,8 @@
               <div class="sm">${date}</div>`;
         let content;
         if (memo != null) content = `<div class="sm co" style="white-space: nowrap;">${memo.title}</div>`;
-        else content = `<div style="position:absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                            <i class="fa fa-plus"></i>
+        else content = `<div style="position:absolute; color:white; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                            <i class="fa fa-plus fa-2x"></i>
                         </div>`
         fill += content + `</div></tr>`;
         out.push(fill);

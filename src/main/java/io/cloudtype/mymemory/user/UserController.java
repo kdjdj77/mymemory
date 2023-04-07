@@ -34,16 +34,16 @@ public class UserController {
         return ValidResponse.of(200);
     }
 
-    @PutMapping("/users/{id}")
-    public UserResponse update(@RequestBody @Validated UpdateRequest request, @PathVariable("id") Long userId) {
-        User user = userService.getUser(userId);
+    @PutMapping("/users")
+    public UserResponse update(@RequestBody @Validated UpdateRequest request) {
+        User user = userService.getUser();
         request.update(user);
         return UserResponse.of(userService.upsertUser(user));
     }
 
-    @GetMapping("/users/{id}")
-    public UserResponse get(@PathVariable("id") Long userId) {
-        User user = userService.getUser(userId);
+    @GetMapping("/users")
+    public UserResponse get() {
+        User user = userService.getUser();
         return UserResponse.of(user);
     }
 
