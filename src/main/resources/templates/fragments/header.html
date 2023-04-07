@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>MyMemory</title>
     <style>
-        div {
-            background-color: #F0F8FF; /* 연한 하늘색 */
-        }
-        div {
-            background-color: #87CEFA; /* 연한 스카이 블루 */
+        header {
+            background-color: #0077be;
+            color: #ffffff;
             padding: 20px;
         }
-        div h1 {
-            color: #FFFFFF; /* 흰색 */
-            text-align: center;
-            font-family: Arial, sans-serif;
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
         }
     </style>
 </head>
 <body>
 <th:block th:fragment="header">
-    <div>
-        <h1>MyMemory</h1>
-    </div>
+    <header>
+        <h1>Welcome to MyMemory</h1>
+    </header>
 </th:block>
 </body>
 </html>

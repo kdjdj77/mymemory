@@ -34,7 +34,9 @@
 <th:bloc th:replace="fragments/header::header"></th:bloc>
 
 <div id="frame">
+    <th:bloc th:replace="fragments/header::header"></th:bloc>
     <div layout:fragment="content" class="content"></div>
+    <th:bloc th:replace="fragments/footer::footer"></th:bloc>
 </div>
 
 <th:bloc th:replace="fragments/footer::footer"></th:bloc>
