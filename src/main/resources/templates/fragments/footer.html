@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>MyMemory</title>
-    <style>
-        footer {
-            background-color: #0077be;
-            color: #ffffff;
-            padding: 10px;
-            text-align: center;
-        }
-    </style>
-</head>
+<th:block th:fragment="footer">
 <body>
+<style>
+    footer {
+        z-index: 10;
+        height:10rem;
+        border-top:1px solid dimgray;
+        background-color: lightblue;
+        color: dimgray;
+        text-align: center;
+    }
+</style>
 <footer>
     <p>&copy; 2023 MyMemory. All rights reserved.</p>
 </footer>
 </body>
+</th:block>
 </html>

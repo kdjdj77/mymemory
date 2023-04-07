@@ -20,6 +20,7 @@
             resize:none;
             font-family: "Nanum Gothic";
         }
+        textarea { height:500px; }
         input[type="button"] {
             background-color: dodgerblue; /* 제출 버튼 배경색상 */
             color: #FFFFFF; /* 제출 버튼 글자 색상 */
@@ -33,19 +34,25 @@
         input[type="button"]:hover {
             background-color: #3E8E41; /* 제출 버튼 호버 배경색상 */
         }
+        #submitBtn {
+            width:100%;
+        }
     </style>
 </head>
 <body>
 <div id="frame">
     <div layout:fragment="content">
+        <th:bloc th:replace="fragments/header::header"></th:bloc>
         <h4>
             <span th:text="${date}"></span>
-            <button type="button" onclick="redirect()"><i class="fa fa-reply"></i></button>
+            <button type="button" style="float:right; padding: 0.3rem 0.5rem 0.3rem 0.5rem;" class="btn" onclick="redirect()">
+                <i class="fa fa-reply"></i>
+            </button>
         </h4>
         <input type="hidden" id="date" th:value="${memoDate}">
         <input type="text" id="title" placeholder="제목">
-        <textarea id="content" rows="10" cols="100" placeholder="내용" maxlength="5000"></textarea>
-        <input type="button" value="전송" onclick="send()">
+        <textarea id="content" placeholder="내용" maxlength="5000"></textarea>
+        <button type="button" id="submitBtn" class="btn" onclick="send()">완료</button>
     </div>
 </div>
 </body>

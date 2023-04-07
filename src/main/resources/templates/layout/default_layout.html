@@ -14,11 +14,11 @@
         }
         #frame {
             width:80%;
-            margin: 20px 10% 20px 10%;
+            margin: 4rem 10% 2rem 10%;
             background-color: #FFFFFF; /* 폼 배경색상 */
             border: 1px solid #C1D4E7; /* 폼 테두리 */
-            padding: 20px; /* 폼 내부 여백 */
-            max-width: 500px; /* 폼 최대 너비 */
+            padding: 4rem 20px 20px 20px; /* 폼 내부 여백 */
+            max-width: 700px; /* 폼 최대 너비 */
             margin: 0 auto; /* 가운데 정렬 */
         }
         @media (max-width: 400px) {
@@ -31,12 +31,8 @@
     </style>
 </head>
 <body>
-<th:bloc th:replace="fragments/header::header"></th:bloc>
-
 <div id="frame">
-    <th:bloc th:replace="fragments/header::header"></th:bloc>
     <div layout:fragment="content" class="content"></div>
-    <th:bloc th:replace="fragments/footer::footer"></th:bloc>
 </div>
 
 <th:bloc th:replace="fragments/footer::footer"></th:bloc>
