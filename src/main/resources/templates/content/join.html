@@ -5,9 +5,11 @@
 <head>
     <meta charset="UTF-8">
     <title>회원가입</title>
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet"> <!-- 폰트 추가 -->
     <style>
         body {
             background-color: #E6F2FF; /* 배경색상 */
+            font-family: 'Nanum Gothic', sans-serif; /* 폰트 적용 */
         }
         frame {
             background-color: #FFFFFF; /* 폼 배경색상 */
@@ -61,6 +63,14 @@
             background-color: #3E8E41;
             /* 제출 버튼 호버 배경색상 */
         }
+
+        .title {
+            display: block;
+            text-align: center; /* 중앙 정렬 */
+            font-size: 24px; /* 글자 크기 */
+            font-weight: bold; /* 글자 굵기 */
+            margin-bottom: 20px; /* 제목과 입력란 사이의 간격 */
+        }
     </style>
 </head>
 <body>
@@ -70,8 +80,9 @@
         <span class="title" id="title">회원가입</span>
         <input type="text" id="ID" name="username" placeholder="아이디">
         <input type="password" id="PW" name="password" placeholder="비밀번호">
+        <input type="password" id="RPW" name="rePassword" placeholder="비밀번호확인">
         <input type="text" id="name" name="name" placeholder="이름">
-        <span id="error" style="color:red;"></span>
+        <span id="error" style="color:red;"></span><br>
 
         <input type="button" value="가입하기" onclick="join()">
     </div>
@@ -80,6 +91,14 @@
 
 <script layout:fragment="script">
     function join() {
+        var password = $("#PW").val();
+        var rePassword = $("#RPW").val();
+
+        if (password !== rePassword) {
+            $("#error").text("비밀번호가 일치하지 않습니다.");
+            return;
+        }
+
         $.ajax({
             contentType: 'application/json',
             url: `/api/join`,
@@ -87,7 +106,7 @@
             dataType: 'json',
             data: JSON.stringify({
                 "username": $("#ID").val(),
-                "password": $("#PW").val(),
+                "password": password,
                 "name": $("#name").val()
             }),
             success : function(data) {
