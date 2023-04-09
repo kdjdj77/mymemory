@@ -360,6 +360,25 @@ iframe {
   transition: all 0.4s;
 }
 
+.login100-form-bgbtn-exit {
+  position: absolute;
+  z-index: -1;
+  width: 300%;
+  height: 100%;
+  background: #bd2130;
+  background: -webkit-linear-gradient(right, #bd2130, #dc3545, #bd2130, #dc3545);
+  background: -o-linear-gradient(right, #bd2130, #dc3545, #bd2130, #dc3545);
+  background: -moz-linear-gradient(right, #bd2130, #dc3545, #bd2130, #dc3545);
+  background: linear-gradient(right, #bd2130, #dc3545, #bd2130, #dc3545);
+  top: 0;
+  left: -100%;
+
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
 .login100-form-btn {
   font-family: Poppins-Medium;
   font-size: 15px;
