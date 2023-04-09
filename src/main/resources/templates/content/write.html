@@ -12,8 +12,6 @@
             width: 100%; /* 폼 입력 요소의 너비 */
             padding: 8px; /* 입력 요소 내부 여백 */
             margin-bottom: 10px; /* 입력 요소 간격 */
-            border: 1px solid #C1D4E7; /* 입력 요소 테두리 */
-            border-radius: 5px; /* 입력 요소 둥글게 처리 */
             font-size: 16px; /* 입력 요소 글자 크기 */
             color: #444444; /* 입력 요소 글자 색상 */
             box-sizing: border-box; /* 요소 크기 계산 시 테두리와 여백 포함 */
@@ -37,6 +35,24 @@
         #submitBtn {
             width:100%;
         }
+        #updateBtn {
+            border:none;
+            background:none;
+            float:left;
+            display:none;
+            cursor:pointer;
+            margin-left:1rem;
+        }
+        .updateInput {
+            border: 1px solid #C1D4E7; /* 입력 요소 테두리 */
+            border-radius: 5px; /* 입력 요소 둥글게 처리 */
+        }
+        .readInput {
+            border:none;
+            border-radius: 0;
+            border-bottom:1px solid black;
+            outline:none;
+        }
     </style>
 </head>
 <body>
@@ -44,15 +60,18 @@
     <div layout:fragment="content">
         <th:bloc th:replace="fragments/header::header"></th:bloc>
         <h4>
-            <span th:text="${date}"></span>
+            <span style="float:left;" th:text="${date}"></span>
+            <span id="updateBtn" type="button" onclick="update()">
+                <i class="fa fa-pencil-square-o"></i>
+            </span>
             <button type="button" style="float:right; padding: 0.3rem 0.5rem 0.3rem 0.5rem;" class="btn" onclick="redirect()">
                 <i class="fa fa-reply"></i>
             </button>
         </h4>
         <input type="hidden" id="date" th:value="${memoDate}">
-        <input type="text" id="title" placeholder="제목">
-        <textarea id="content" placeholder="내용" maxlength="5000"></textarea>
-        <button type="button" id="submitBtn" class="btn" onclick="send()">완료</button>
+        <input type="text" id="title" class="updateInput" placeholder="제목">
+        <textarea id="content" class="updateInput" placeholder="내용" maxlength="5000"></textarea>
+        <button type="button" id="submitBtn" style="display:block;" class="btn" onclick="send()">완료</button>
     </div>
 </div>
 </body>
@@ -69,10 +88,27 @@
             if (data.status == 200) {
                 $("#title").val(data.title);
                 $("#content").val(data.content);
+                read();
             }
         }
     })
+    function read() {
+        $("#title").attr("readonly", true);
+        $("#content").attr("readonly", true);
+        $("#updateBtn").css("display", "block");
+        $("#submitBtn").css("display", "none");
+        $("#title").toggleClass("readInput updateInput");
+        $("#content").toggleClass("readInput updateInput");
+    }
 
+    function update() {
+        $("#title").attr("readonly", false);
+        $("#content").attr("readonly", false);
+        $("#updateBtn").css("display", "none");
+        $("#submitBtn").css("display", "block");
+        $("#title").toggleClass("readInput updateInput");
+        $("#content").toggleClass("readInput updateInput");
+    }
     function send() {
         $.ajax({
             contentType: 'application/json',
