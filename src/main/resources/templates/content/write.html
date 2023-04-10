@@ -2,31 +2,132 @@
 <html xmlns:th="http//www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default_layout}">
-
-<div layout:fragment="content">
-    <h1>일기 작성</h1>
-    <input type="text" id="title" name="title" placeholder="제목">
-    <textarea id="content" name="content" placeholder="내용">
-
-    </textarea>
-    <input type="text" id="date" name="date" placeholder="날짜">
-    <input type="button" value="전송" onclick="send()">
+<head>
+    <meta charset="UTF-8">
+    <title>일기 쓰기 폼</title>
+    <script type="text/javascript" th:src="@{/js/authCheck.js}"></script>
+    <style layout:fragment="css">
+        input[type="text"],
+        textarea {
+            width: 100%; /* 폼 입력 요소의 너비 */
+            padding: 8px; /* 입력 요소 내부 여백 */
+            margin-bottom: 10px; /* 입력 요소 간격 */
+            font-size: 16px; /* 입력 요소 글자 크기 */
+            color: #444444; /* 입력 요소 글자 색상 */
+            box-sizing: border-box; /* 요소 크기 계산 시 테두리와 여백 포함 */
+            resize:none;
+            font-family: "Nanum Gothic";
+        }
+        textarea { height:500px; }
+        input[type="button"] {
+            background-color: dodgerblue; /* 제출 버튼 배경색상 */
+            color: #FFFFFF; /* 제출 버튼 글자 색상 */
+            padding: 12px 20px; /* 제출 버튼 내부 여백 */
+            border: none; /* 제출 버튼 테두리 없음 */
+            border-radius: 5px; /* 제출 버튼 둥글게 처리 */
+            font-size: 16px; /* 제출 버튼 글자 크기 */
+            cursor: pointer; /* 커서 모양 변경 */
+            box-sizing: border-box; /* 요소 크기 계산 시 테두리와 여백 포함 */
+        }
+        input[type="button"]:hover {
+            background-color: #3E8E41; /* 제출 버튼 호버 배경색상 */
+        }
+        #submitBtn {
+            width:100%;
+        }
+        #updateBtn {
+            border:none;
+            background:none;
+            float:left;
+            display:none;
+            cursor:pointer;
+            margin-left:1rem;
+        }
+        .updateInput {
+            border: 1px solid #C1D4E7; /* 입력 요소 테두리 */
+            border-radius: 5px; /* 입력 요소 둥글게 처리 */
+        }
+        .readInput {
+            border:none;
+            border-radius: 0;
+            border-bottom:1px solid black;
+            outline:none;
+        }
+    </style>
+</head>
+<body>
+<div id="frame">
+    <div layout:fragment="content">
+        <th:bloc th:replace="fragments/header::header"></th:bloc>
+        <h4>
+            <span style="float:left;" th:text="${date}"></span>
+            <span id="updateBtn" type="button" onclick="update()">
+                <i class="fa fa-pencil-square-o"></i>
+            </span>
+            <button type="button" style="float:right; padding: 0.3rem 0.5rem 0.3rem 0.5rem;" class="btn" onclick="redirect()">
+                <i class="fa fa-reply"></i>
+            </button>
+        </h4>
+        <input type="hidden" id="date" th:value="${memoDate}">
+        <input type="text" id="title" class="updateInput" placeholder="제목">
+        <textarea id="content" class="updateInput" placeholder="내용" maxlength="5000"></textarea>
+        <button type="button" id="submitBtn" style="display:block;" class="btn" onclick="send()">완료</button>
+    </div>
 </div>
+</body>
 
 <script layout:fragment="script">
+    let dateList = $("#date").val().split(".");
+    $.ajax({
+        contentType: 'application/json',
+        url: `/api/memos/${dateList[0]}/${dateList[1]}/${dateList[2]}`,
+        type:"GET",
+        dataType: 'json',
+        headers: { 'X-AUTH-TOKEN': localStorage.getItem("token") },
+        success : function(data) {
+            if (data.status == 200) {
+                $("#title").val(data.title);
+                $("#content").val(data.content);
+                read();
+            }
+        }
+    })
+    function read() {
+        $("#title").attr("readonly", true);
+        $("#content").attr("readonly", true);
+        $("#updateBtn").css("display", "block");
+        $("#submitBtn").css("display", "none");
+        $("#title").toggleClass("readInput updateInput");
+        $("#content").toggleClass("readInput updateInput");
+    }
+
+    function update() {
+        $("#title").attr("readonly", false);
+        $("#content").attr("readonly", false);
+        $("#updateBtn").css("display", "none");
+        $("#submitBtn").css("display", "block");
+        $("#title").toggleClass("readInput updateInput");
+        $("#content").toggleClass("readInput updateInput");
+    }
     function send() {
         $.ajax({
             contentType: 'application/json',
-            url: `/memos/write`,
+            url: `/api/memos/write`,
             type:"POST",
             dataType: 'json',
+            headers: { 'X-AUTH-TOKEN': localStorage.getItem("token") },
             data: JSON.stringify({
                 "title": $("#title").val(),
                 "content": $("#content").val(),
                 "date": $("#date").val()
             }),
+            success : function(data) {
+                if (data.status == 200) location.href = `/home`;
+            }
         })
     }
+    function redirect() {
+        location.href = `/home`;
+    }
 </script>
-
 </html>

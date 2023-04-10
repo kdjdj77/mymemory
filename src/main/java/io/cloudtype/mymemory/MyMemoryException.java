@@ -7,10 +7,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class MyMemoryException extends RuntimeException {
-    private int status = 400;
+    private int status;
     private String message;
-
-    public MyMemoryException(String message) {
-        this.message = message;
-    }
 }

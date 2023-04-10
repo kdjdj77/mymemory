@@ -2,7 +2,6 @@ package io.cloudtype.mymemory.memo;
 
 import io.cloudtype.mymemory.MyMemoryException;
 import io.cloudtype.mymemory.common.U;
-import io.cloudtype.mymemory.config.PrincipalDetails;
 import io.cloudtype.mymemory.memo.response.MemoResponse;
 import io.cloudtype.mymemory.user.User;
 import io.cloudtype.mymemory.user.UserRepository;
@@ -24,7 +23,13 @@ public class MemoService {
 
     public Memo writeMemo(Memo memo) {
         Long userId = getUserId();
-        memo.setUserId(userId);
+        Memo exist = memoRepository.findByUserIdAndDate(userId, memo.getDate());
+        if (exist != null) {
+            exist.setTitle(memo.getTitle());
+            exist.setContent(memo.getContent());
+            memo = exist;
+        } else memo.setUserId(userId);
+
         memoRepository.save(memo);
         return memo;
     }
@@ -80,5 +85,13 @@ public class MemoService {
     }
     private void isMyMemo(Long userId, Memo memo) {
         if (userId != memo.getUserId()) throw new MyMemoryException(404, "권한이 없습니다.");
+    }
+
+    public Memo getMemoByDate(Integer year, Integer month, Integer day) {
+        LocalDate date = LocalDate.of(year, month, day);
+        Long userId = getUserId();
+        Memo memo = memoRepository.findByUserIdAndDate(userId, date);
+        if (memo == null) throw new MyMemoryException(404, "일기 없음");
+        return memo;
     }
 }

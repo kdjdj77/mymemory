@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/memos")
+@RequestMapping("/api/memos")
 @RequiredArgsConstructor
 public class MemoController {
 
@@ -59,5 +59,14 @@ public class MemoController {
             @PathVariable("month") Integer month) {
         List<Memo> list = memoService.getMemoList(year, month);
         return MemoListResponse.of(list);
+    }
+
+    @GetMapping("/{year}/{month}/{day}")
+    public MemoResponse getMemoByDate(
+            @PathVariable("year") Integer year,
+            @PathVariable("month") Integer month,
+            @PathVariable("day") Integer day) {
+        Memo memo = memoService.getMemoByDate(year, month, day);
+        return MemoResponse.of(memo);
     }
 }

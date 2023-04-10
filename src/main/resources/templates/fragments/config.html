@@ -3,8 +3,18 @@
 <body>
 <th:block th:fragment="config">
     <link rel="stylesheet" th:href="@{/css/common.css}"/>
-    <script type="text/javascript" th:src="@{/js/jquery/jquery-3.2.1.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/fonts/font-awesome-4.7.0/css/font-awesome.min.css}">
+    <script type="text/javascript" th:src="@{/vendor/jquery/jquery-3.2.1.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/common.js}"></script>
+    <style>
+        body {
+            -ms-overflow-style: none; /* 인터넷 익스플로러 */
+            scrollbar-width: none; /* 파이어폭스 */
+        }
+        body::-webkit-scrollbar {
+            display: none; /* 크롬, 사파리, 오페라, 엣지 */
+        }
+    </style>
 </th:block>
 </body>
 </html>

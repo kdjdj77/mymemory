@@ -2,9 +2,174 @@
 <html xmlns:th="http//www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default_layout}">
-
+<head>
+  <title>Home</title>
+  <script type="text/javascript" th:src="@{/js/authCheck.js}"></script>
+  <style>
+    table {
+      width: 100%;
+    }
+    .ttd {
+      width: 14.28%;
+      position: relative;
+    }
+    .ttd:after {
+      content: '';
+      display: block;
+      margin-top: 100%;
+    }
+    .head {
+      padding:0.2rem;
+      color:white;
+      font-weight:bold;
+      background-color: dodgerblue;
+    }
+    .ttd .cell {
+      cursor:pointer;
+      overflow:hidden;
+      font-size:0.7rem;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: lightskyblue;
+    }
+    .ttd .cell:hover {
+      outline:2px solid royalblue;
+    }
+    .today {
+      border:2px solid blueviolet;
+    }
+    p {
+      font-family: "Nanum Gothic";
+    }
+    .sm { font-size:0.2rem; margin:0.05rem; padding:0.05rem;}
+    .co { background-color: slateblue; color:white; }
+  </style>
+</head>
 <div layout:fragment="content">
-  본문 영역입니다.
-</div>
+  <th:bloc th:replace="fragments/header::header"></th:bloc>
+  <div style="width:100%; box-sizing: border-box; background-color:cornflowerblue; padding:0.5rem; color:white; margin-bottom:0.5rem;">
+    <p style="text-align: center; font-weight:bold" id="wiseMessage"></p>
+    <p style="text-align: center; font-size:0.8rem;" id="wiseAuthor"></p>
+  </div>
+  <div style="width:100%; text-align:center; margin-bottom:1rem;">
+    <button type="button" style="cursor:pointer; width:2rem; height:2rem; float:left; vertical-align:middle; margin-left:1rem;" onclick="minusYear()">
+      <i class="fa fa-angle-double-left fa-2x"></i>
+    </button>
+    <button type="button" style="cursor:pointer; width:2rem; height:2rem; vertical-align:middle; margin-right:1rem;" onclick="minusMonth()">
+      <i class="fa fa-angle-left fa-2x"></i>
+    </button>
+    <span style="font-size:1.2rem; font-weight:bold;" id="YM"></span>
+    <button type="button" style="cursor:pointer; width:2rem; height:2rem; vertical-align:middle; margin-left:1rem;" onclick="plusMonth()">
+      <i class="fa fa-angle-right fa-2x"></i>
+    </button>
+    <button type="button" style="cursor:pointer; width:2rem; height:2rem; float:right; vertical-align:middle; margin-right:1rem;" onclick="plusYear()">
+      <i class="fa fa-angle-double-right fa-2x"></i>
+    </button>
+  </div>
+  <table>
+    <tr id="trHead"></tr>
+    <tr id="tr0"></tr>
+    <tr id="tr1"></tr>
+    <tr id="tr2"></tr>
+    <tr id="tr3"></tr>
+    <tr id="tr4"></tr>
+    <tr id="tr5"></tr>
+    <tr id="tr6"></tr>
+  </table>
+  <div id="appointList">
 
+  </div>
+  <script type="text/javascript" th:src="@{/js/showText.js}"></script>
+  <script>
+    let textData = getRandomWiseText();
+    console.log(textData);
+    $("#wiseMessage").html(textData.message);
+    $("#wiseAuthor").html(`-${textData.author}-`);
+  </script>
+</div>
+<script layout:fragment="script">
+  let today = new Date();
+  let year = today.getFullYear();
+  let month = today.getMonth() + 1;
+  let calenderData;
+  const todayArr = [year, month, today.getDate()];
+  const days = ["일", "월", "화", "수", "목", "금", "토"];
+  for(let i = 0; i < 7; i++) $("#trHead").append(
+      `<td>
+         <div class="head" style="display:flex; justify-content:center;
+            align-items:center;">
+            ${days[i]}
+         </div>
+      </td>`);
+
+  getMemos(year, month);
+  function getMemos(y, m) {
+    $.ajax({
+      contentType: 'application/json',
+      url:`/api/memos/${y}/${m}`,
+      type:"GET",
+      dataType: 'json',
+      headers: { 'X-AUTH-TOKEN': localStorage.getItem("token") },
+      success : function(data) {
+        if (data.status == 200) {
+          calenderData = data.list;
+          setMemos(data.list, y, m);
+        } else console.log(data.message);
+      },
+      error : function() { console.log("일기 목록을 가져올 수 없습니다"); }
+    });
+  }
+
+  // 달력 세팅
+  function setMemos(memos, y, m) {
+    $("#YM").html(`${y}년 ${m}월`)
+    let start = new Date(y, m-1, 1).getDay();
+    let monthDays = new Date(y, m, 0).getDate();
+
+    const out = [];
+    let date = 0;
+    for(let i = 0; i <= 42; i++) {
+      if (i % 7 == 0) { $(`#tr${i/7}`).html(out); out.length = 0; }
+
+      if (date >= monthDays || i < start) out.push(`<td></td>`);
+      else {
+        date++;
+        let memo = memos[date];
+        let isToday = y == todayArr[0] && m == todayArr[1] && date == todayArr[2];
+        let fill =
+          `<td class="ttd">
+            <div class="${isToday ? "today" : ""} cell" onclick="func(${y}, ${m}, ${date})">
+              <div class="sm">${date}</div>`;
+        let content;
+        if (memo != null) content = `<div class="sm co" style="white-space: nowrap;">${t(memo.title)}</div>`;
+        else content = `<div style="position:absolute; color:white; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                            <i class="fa fa-plus fa-2x"></i>
+                        </div>`
+        fill += content + `</div></tr>`;
+        out.push(fill);
+      }
+    }
+  }
+  function func(y, m, d) {
+    location.href = `/write/${y}/${m}/${d}`;
+  }
+  function plusMonth() {
+    if (++month > 12) { year++; month -= 12; }
+    getMemos(year, month);
+  }
+  function minusMonth() {
+    if (--month < 1) { year--; month += 12; }
+    getMemos(year, month);
+  }
+  function plusYear() {
+    getMemos(++year, month);
+  }
+  function minusYear() {
+    if (--year < 1) return;
+    getMemos(year, month);
+  }
+</script>
 </html>

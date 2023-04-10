@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <!--===============================================================================================-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+    <style>
+        body {
+            background-color: #E6F2FF; /* 배경색상 */
+            font-family: 'Nanum Gothic'; /* 폰트 적용 */
+        }
+        frame {
+            background-color: #FFFFFF; /* 폼 배경색상 */
+            border: 1px solid #C1D4E7; /* 폼 테두리 */
+            padding: 20px; /* 폼 내부 여백 */
+            max-width: 500px; /* 폼 최대 너비 */
+            margin: 0 auto; /* 가운데 정렬 */
+        }
+
+        .title {
+            display: block;
+            text-align: center; /* 중앙 정렬 */
+            font-size: 24px; /* 글자 크기 */
+            font-weight: bold; /* 글자 굵기 */
+            margin-bottom: 20px; /* 제목과 입력란 사이의 간격 */
+        }
+    </style>
+</head>
+<body>
+
+<div id="frame" class="frame">
+    <div layout:fragment="content">
+        <div style="width:100%; display:flex; flex-wrap:wrap; justify-content: center">
+            <div style="width:80%; max-width:300px">
+                <span class="title" id="title">회원가입</span>
+                <div class="wrap-input100 validate-input" data-validate="아이디는 영문+숫자 4~10자만 가능합니다">
+                    <input class="input100" id="ID" type="text" name="username">
+                    <span class="focus-input100" data-placeholder="아이디"></span>
+                </div>
+                <div class="wrap-input100 validate-input" data-validate="비밀번호를 입력해주세요">
+                    <span class="btn-show-pass"><i class="zmdi zmdi-eye"></i></span>
+                    <input class="input100" id="PW" type="password" name="password">
+                    <span class="focus-input100" data-placeholder="비밀번호"></span>
+                </div>
+                <div class="wrap-input100 validate-input" data-validate="비밀번호를 입력해주세요">
+                    <span class="btn-show-pass"><i class="zmdi zmdi-eye"></i></span>
+                    <input class="input100" id="RPW" type="password" name="rePassword">
+                    <span class="focus-input100" data-placeholder="비밀번호확인"></span>
+                </div>
+                <div class="wrap-input100 validate-input" data-validate="아이디는 영문+숫자 4~10자만 가능합니다">
+                    <input class="input100" id="name" type="text" name="name">
+                    <span class="focus-input100" data-placeholder="닉네임"></span>
+                </div>
+                <span id="error" style="color:red;"></span><br>
+
+                <div class="container-login100-form-btn">
+                    <div class="wrap-login100-form-btn">
+                        <div class="login100-form-bgbtn"></div>
+                        <button id="submitBtn" type="button" class="login100-form-btn" onclick="join()">
+                            <b>가입하기</b>
+                        </button>
+                    </div>
+                </div>
+                <div class="container-login100-form-btn">
+                    <div class="wrap-login100-form-btn">
+                        <div class="login100-form-bgbtn-exit"></div>
+                        <button id="exitBtn" type="button" class="login100-form-btn" onclick="exit()">
+                            <b>취소</b>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--===============================================================================================-->
+    <script src="vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/daterangepicker/moment.min.js"></script>
+    <script src="vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/countdowntime/countdowntime.js"></script>
+    <!--===============================================================================================-->
+</div>
+</body>
+
+<script layout:fragment="script">
+    (function ($) {
+        "use strict";
+        //[ Focus input ]
+
+        $('.input100').each(function () {
+            $(this).on('blur', function () {
+                if ($(this).val().trim() != "") $(this).addClass('has-val');
+                else $(this).removeClass('has-val');
+            })
+        })
+        //[ Validate ]
+        let input = $('.validate-input .input100');
+        $('.validate-form').on('submit', function () {
+            let check = true;
+            for (let i = 0; i < input.length; i++)
+                if (validate(input[i]) == false) {
+                    showValidate(input[i]);
+                    check = false;
+                }
+            return check;
+        });
+        $('.validate-form .input100').each(function () {
+            $(this).focus(function () {
+                hideValidate(this);
+            });
+        });
+
+        function validate(input) {
+            if ($(input).attr('type') == 'id' || $(input).attr('name') == 'id') {
+                if ($(input).val().trim().match(/^[A-Za-z0-9]{4,10}$/) == null)
+                    return false;
+            } else if ($(input).val().trim() == '') return false;
+        }
+
+        function showValidate(input) {
+            let thisAlert = $(input).parent();
+            $(thisAlert).addClass('alert-validate');
+        }
+
+        function hideValidate(input) {
+            let thisAlert = $(input).parent();
+            $(thisAlert).removeClass('alert-validate');
+        }
+
+        //[ Show pass ]*/
+        let showPass = 0;
+        $('.btn-show-pass').on('click', function () {
+            if (showPass == 0) {
+                $(this).next('input').attr('type', 'text');
+                $(this).find('i').removeClass('zmdi-eye');
+                $(this).find('i').addClass('zmdi-eye-off');
+                showPass = 1;
+            } else {
+                $(this).next('input').attr('type', 'password');
+                $(this).find('i').addClass('zmdi-eye');
+                $(this).find('i').removeClass('zmdi-eye-off');
+                showPass = 0;
+            }
+        });
+    })(jQuery)
+    function exit() {
+        location.href = `/login`;
+    }
+    function join() {
+        let password = $("#PW").val();
+        let rePassword = $("#RPW").val();
+
+        if (password !== rePassword) {
+            $("#error").text("비밀번호가 일치하지 않습니다.");
+            return;
+        }
+
+        $.ajax({
+            contentType: 'application/json',
+            url: `/api/join`,
+            type:"POST",
+            dataType: 'json',
+            data: JSON.stringify({
+                "username": $("#ID").val(),
+                "password": password,
+                "name": $("#name").val()
+            }),
+            success : function(data) {
+                if (data.status == 200) {
+                    alert("회원가입 완료");
+                    location.href = `/login`;
+                } else $("#error").text(data.message);
+            }
+        })
+    }
+</script>
+</html>
