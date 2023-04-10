@@ -30,7 +30,7 @@
 
 <div layout:fragment="content">
     <div style="width:100%; display:flex; flex-wrap:wrap; justify-content: center">
-        <div style="width:80%">
+        <div style="width:80%; max-width:300px">
             <span class="login100-form-title p-b-10">MyMemory</span>
             <br>
             <span class="login100-form-title p-b-20">
@@ -140,6 +140,9 @@
                 $(this).find('i').removeClass('zmdi-eye-off');
                 showPass = 0;
             }
+        });
+        $('#PW').keypress(function(e){
+            if(e.keyCode == 13) login();
         });
     })(jQuery)
     function login() {
