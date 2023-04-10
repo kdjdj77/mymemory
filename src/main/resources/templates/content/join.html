@@ -196,6 +196,7 @@
             }),
             success : function(data) {
                 if (data.status == 200) {
+                    alert("회원가입 완료");
                     location.href = `/login`;
                 } else $("#error").text(data.message);
             }

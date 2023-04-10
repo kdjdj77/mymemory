@@ -141,6 +141,9 @@
                 showPass = 0;
             }
         });
+        $('#PW').keypress(function(e){
+            if(e.keyCode == 13) login();
+        });
     })(jQuery)
     function login() {
         $.ajax({
