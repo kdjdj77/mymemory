@@ -12,8 +12,13 @@ import java.time.format.DateTimeFormatter;
 @Data
 public class WriteRequest {
     @NotBlank(message = "제목을 입력해주세요.")
+    @Size(max = 20, message = "제목 길이는 최대 20자입니다")
     private String title;
+
+    @Size(max = 5000, message = "내용은 최대 5000자입니다")
     private String content;
+
+    @NotBlank(message = "날짜를 지정해주세요")
     private String date;
 
     public Memo toMemo() {
