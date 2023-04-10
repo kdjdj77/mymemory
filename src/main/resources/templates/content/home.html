@@ -144,7 +144,7 @@
             <div class="${isToday ? "today" : ""} cell" onclick="func(${y}, ${m}, ${date})">
               <div class="sm">${date}</div>`;
         let content;
-        if (memo != null) content = `<div class="sm co" style="white-space: nowrap;">${memo.title}</div>`;
+        if (memo != null) content = `<div class="sm co" style="white-space: nowrap;">${t(memo.title)}</div>`;
         else content = `<div style="position:absolute; color:white; top: 50%; left: 50%; transform: translate(-50%, -50%);">
                             <i class="fa fa-plus fa-2x"></i>
                         </div>`
@@ -170,17 +170,6 @@
   function minusYear() {
     if (--year < 1) return;
     getMemos(year, month);
-  }
-  function t(unsafeText) {
-    return unsafeText.replace(/[<>"'&]/g, function (match) {
-      switch (match) {
-        case '<': return '&lt;';
-        case '>': return '&gt;';
-        case '\"': return '&quot;';
-        case '\'': return '&#39;';
-        case '&': return '&amp;';
-      }
-    });
   }
 </script>
 </html>

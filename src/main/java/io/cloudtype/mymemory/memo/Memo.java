@@ -23,7 +23,7 @@ public class Memo extends BaseEntity {
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "title", nullable = false, length = 20)
     private String title;
 
     @Column(name = "content", length=5000)
