@@ -21,7 +21,7 @@
 **Spring Security** | :heavy_check_mark: |  
 **JWT 발급** | :heavy_check_mark: |  
 **BcryptPasswordEncoder 비밀번호 암호화** | :heavy_check_mark: |  
-**일기 쓰기(CRUD)* | :heavy_check_mark: |  
+**일기 쓰기(CRUD)** | :heavy_check_mark: |  
 **Header, Footer** | :heavy_check_mark: | 
 **화면 UI 개발 (헤더, 풋터, 회원가입, home, 로그인, 일기쓰기, 일기수정)** | :heavy_check_mark: | 
 **front 비동기 (Ajax)** | :heavy_check_mark: |  
