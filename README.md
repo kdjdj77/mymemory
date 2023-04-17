@@ -1,7 +1,7 @@
 # mymemory
 ![image](https://user-images.githubusercontent.com/112387307/232205629-a60b08cf-7ffe-41f4-8bc6-6f5d7a9f1da6.png)
 
-# JPA Repository / RestApi 구현 / JWT  / Spring Security (BcryptPasswordEncoder) / Kakao맵 구현 / 비동기 Api 구현
+# JPA Repository / RestApi 구현 / JWT  / Spring Security (BcryptPasswordEncoder) / CI/CD / 비동기 Api 구현
 
 배포 주소 : https://www.mymemory.site/
 
@@ -58,10 +58,11 @@
 
 ## ScreenShot
 
-<p><img src="https://user-images.githubusercontent.com/51112376/232386054-5fe9830a-bd96-4c23-906c-1d4cf0a86464.png" width="48%">
-<img src="https://user-images.githubusercontent.com/51112376/232386062-fa938f8b-6656-4c07-8f09-167f65947d3c.png" width="48%"></p>
+<p><img src="" width="48%">
+<img src="https://user-images.githubusercontent.com/51112376/232386981-5961914d-cb9a-489e-92b5-9da8219d8756.png" width="48%"></p>
 
-<p><img src="https://user-images.githubusercontent.com/51112376/232386067-43a68d5b-5833-4ba8-a99d-e4459799e5c2.png" width="48%">
-<img src="https://user-images.githubusercontent.com/51112376/232386070-b17a086c-e740-4cf9-808b-1de70d4f23c2.png" width="48%"></p>
+<p><img src="https://user-images.githubusercontent.com/51112376/232386986-dc731a25-7eb0-4adc-a966-b7e8bf2366b5.png" width="48%">
+<img src="https://user-images.githubusercontent.com/51112376/232386990-05c1c5ed-b114-4d98-ab77-e6805a66078a.png" width="48%"></p>
 
-<p><img src="https://user-images.githubusercontent.com/51112376/232386074-287f1c0a-ebb9-4173-a36a-5cbb06693514.png" width="48%"></p>
+<p><img src="https://user-images.githubusercontent.com/51112376/232386997-5c447c5b-3d9a-4231-af71-f8e18d226744.png" width="48%"></p>
+
